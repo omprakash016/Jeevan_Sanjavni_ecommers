@@ -5,6 +5,8 @@ import compression from "compression";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 
+import authRoutes from "./modules/auth/auth.routes.js";
+
 const app = express();
 
 app.use(
@@ -33,5 +35,8 @@ app.get("/api/v1/health", (req, res) => {
     message: "Backend is running successfully 🚀",
   });
 });
+
+app.use("/api/auth", authRoutes);
+
 
 export default app;
