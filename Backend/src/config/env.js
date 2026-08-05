@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 const env = {
   port: process.env.PORT || 5000,
   nodeEnv: process.env.NODE_ENV,
@@ -14,5 +16,6 @@ const env = {
   imagekitPrivateKey: process.env.IMAGEKIT_PRIVATE_KEY,
   imagekitUrlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
 };
+
 
 export default env;

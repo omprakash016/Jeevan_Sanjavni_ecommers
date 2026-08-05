@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan";
 
 import authRoutes from "./modules/auth/auth.routes.js";
-
+import productRoutes from "./modules/product/product.routes.js";
 const app = express();
 
 app.use(
@@ -37,6 +37,6 @@ app.get("/api/v1/health", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
-
+app.use("/api/products", productRoutes);
 
 export default app;
