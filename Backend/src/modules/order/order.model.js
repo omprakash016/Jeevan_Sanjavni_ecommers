@@ -1,0 +1,127 @@
+import mongoose from "mongoose";
+
+const orderItemSchema=new mongoose.Schema(
+    {
+        product:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref:"Product",
+            required:true,
+        },
+
+        name:{
+            type:String,
+            require:true,
+        },
+
+        image:{
+            type:String,
+            required:true,
+        },
+
+        price:{
+            type:Number,
+            required:true,
+        },
+
+        quantity:{
+            type:Number,
+            required:true,
+            min:1,
+        },
+
+        subtotal:{
+            type:Number,
+            required:true,
+        },
+
+    },
+    {_id:false}
+);
+
+const orderSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
+    items: {
+      type: [orderItemSchema],
+      required: true,
+    },
+
+    address: {
+      fullName: String,
+      phone: String,
+      addressLine1: String,
+      addressLine2: String,
+      landmark: String,
+      city: String,
+      state: String,
+      postalCode: String,
+      country: String,
+      addressType: String,
+    },
+
+    totalItems: {
+      type: Number,
+      required: true,
+    },
+
+    totalQuantity: {
+      type: Number,
+      required: true,
+    },
+
+    subtotal: {
+      type: Number,
+      required: true,
+    },
+
+    paymentMethod: {
+      type: String,
+      enum: ["COD"],
+      default: "COD",
+    },
+
+    paymentStatus: {
+      type: String,
+      enum: ["Pending", "Paid", "Failed"],
+      default: "Pending",
+    },
+
+    orderStatus: {
+      type: String,
+      enum: [
+        "Pending",
+        "Confirmed",
+        "Processing",
+        "Shipped",
+        "Delivered",
+        "Cancelled",
+      ],
+      default: "Pending",
+    },
+    cancelledAt:{
+      type:Date,
+      default:null,
+    },
+    cancelReason:{
+      type:String,
+      default:null,
+    },
+    orderNumber: {
+      type: String,
+       required: true,
+       unique: true,
+       index: true,
+      },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const Order = mongoose.model("Order", orderSchema);
+export default Order;

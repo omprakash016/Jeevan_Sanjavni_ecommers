@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../modules/auth/user.model.js";
+import ROLES from "../constants/roles.js";
 
 export const protect = async (req, res, next) => {
   try {
@@ -56,7 +57,7 @@ export const protect = async (req, res, next) => {
 
 export const isAdmin = (req, res, next) => {
     
-    if (req.user.role !== "admin") {
+    if (req.user.role !== ROLES.ADMIN) {
         return res.status(403).json({
             success: false,
             message: "Access denied"

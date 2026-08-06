@@ -7,6 +7,10 @@ import morgan from "morgan";
 
 import authRoutes from "./modules/auth/auth.routes.js";
 import productRoutes from "./modules/product/product.routes.js";
+import cartRoutes from "./modules/cart/cart.routes.js";
+import addressRoutes from "./modules/address/address.routes.js";
+import orderRoutes from "./modules/order/order.routes.js"; 
+import adminRoutes from "./modules/admin/admin.routes.js"; 
 const app = express();
 
 app.use(
@@ -38,5 +42,9 @@ app.get("/api/v1/health", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/address", addressRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/admin", adminRoutes);
 
 export default app;

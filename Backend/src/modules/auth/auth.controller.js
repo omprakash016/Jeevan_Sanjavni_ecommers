@@ -2,6 +2,9 @@ import User from "./user.model.js";
 import { validationResult } from "express-validator";
 import { generateToken } from "../../config/jwt.js";
 import cookieOptions from "../../utils/cookieOptions.js";
+import ROLES from "../../constants/roles.js";
+
+
 export const register = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -39,6 +42,7 @@ if (existingUser) {
       email,
       phone,
       password,
+      role: ROLES.CUSTOMER,
     });
 
     const token = generateToken(user._id, user.role);

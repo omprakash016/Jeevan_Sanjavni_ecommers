@@ -61,7 +61,8 @@ const productSchema = new mongoose.Schema(
 
     SellingPrice: {
       type: Number,
-      default: 0,
+      default: 10,
+      required:true,
       min: 0,
     },
 

@@ -18,3 +18,15 @@ export const uploadImages = async (files) => {
   }
   return uploadedImages;
 };
+
+export const deleteImages = async (fileIds) => {
+  try {
+    if (!fileIds || fileIds.length === 0) return;
+
+    await Promise.all(
+      fileIds.map((fileId) => imagekit.deleteFile(fileId))
+    );
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};

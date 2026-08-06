@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+import seedAdmin from "./seed/admin.seed.js";
+
 import app from "./app.js";
 import connectDB from "./config/db.js";
 import env from "./config/env.js";
@@ -21,3 +23,4 @@ const startServer = async () => {
 };
 
 startServer();
+ await seedAdmin();
