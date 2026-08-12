@@ -1,0 +1,74 @@
+.floating-buttons {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  z-index: 999;
+}
+
+.floating-buttons a {
+  width: 58px;
+  height: 58px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+  text-decoration: none;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+
+  transition: all .3s ease;
+}
+
+.whatsapp-btn {
+  background: #25D366;
+}
+
+.floating-call-btn {
+  background: #0B6E4F;
+  color: white;
+}
+
+.floating-call-btn {
+  background: #0B6E4F;
+  color: white;
+}
+
+.floating-call-btn svg {
+  color: white;
+}
+
+.floating-buttons a:hover {
+  transform: translateY(-5px) scale(1.08);
+   box-shadow: 0 12px 25px rgba(0,0,0,.25);
+}
+
+.whatsapp-btn svg {
+  font-size: 32px;
+}
+
+.floating-buttons a svg {
+    color: white;
+}
+
+@media (max-width:768px) {
+
+  .floating-buttons {
+    right: 15px;
+    bottom: 15px;
+  }
+
+  .floating-buttons a {
+    width: 52px;
+    height: 52px;
+  }
+
+}

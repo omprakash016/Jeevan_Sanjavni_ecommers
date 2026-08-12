@@ -1,0 +1,218 @@
+.auth-section{
+
+    position:relative;
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    overflow:hidden;
+
+    background:linear-gradient(
+    135deg,
+    #F8FCFA 0%,
+    #EEF8F4 100%
+    );
+
+    padding:30px;
+
+}
+
+/* Glass Card */
+
+.auth-card{
+
+    position:relative;
+
+    z-index:5;
+
+    width:100%;
+    max-width:430px;
+
+    background:rgba(255,255,255,.72);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,.45);
+
+    border-radius:24px;
+
+    padding:40px;
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.08);
+
+}
+
+.auth-card h2{
+
+    color:#0B6E4F;
+
+    text-align:center;
+
+    font-size:32px;
+
+    margin-bottom:10px;
+
+}
+
+.auth-card p{
+
+    text-align:center;
+
+    color:#666;
+
+    margin-bottom:35px;
+
+}
+
+/* Decorative Circles */
+
+.blur-circle{
+
+    position:absolute;
+
+    border-radius:50%;
+
+    filter:blur(25px);
+
+}
+
+.blur-circle.one{
+
+    width:350px;
+
+    height:350px;
+
+    background:#2BB67333;
+
+    top:-120px;
+
+    left:-120px;
+
+}
+
+.blur-circle.two{
+
+    width:260px;
+
+    height:260px;
+
+    background:#0B6E4F22;
+
+    bottom:-80px;
+
+    right:-80px;
+
+}
+
+/* Leaves */
+
+.leaf{
+
+    position:absolute;
+
+    opacity:.18;
+
+    user-select:none;
+
+    pointer-events:none;
+
+}
+
+.leaf1{
+
+    width:180px;
+
+    top:20px;
+
+    left:20px;
+
+}
+
+.leaf2{
+
+    width:160px;
+
+    top:40px;
+
+    right:20px;
+
+}
+
+.leaf3{
+
+    width:170px;
+
+    bottom:30px;
+
+    left:40px;
+
+}
+
+.leaf4{
+
+    width:180px;
+
+    bottom:10px;
+
+    right:30px;
+
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.auth-card{
+
+padding:30px 25px;
+
+}
+
+.leaf{
+
+width:110px;
+
+opacity:.13;
+
+}
+
+.blur-circle.one{
+
+width:240px;
+
+height:240px;
+
+}
+
+.blur-circle.two{
+
+width:180px;
+
+height:180px;
+
+}
+
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: 24px;
+  margin-bottom: 0;
+  color: #666;
+}
+
+.auth-switch a {
+  color: #0b6e4f;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,85 @@
+.video-section {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 70px;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.video-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.clinic-video {
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.video-content h3 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: var(--primary);
+}
+
+.video-content p {
+  color: var(--text-light);
+  line-height: 1.8;
+  margin-bottom: 25px;
+}
+
+.video-content ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.video-content li {
+  margin-bottom: 15px;
+  font-size: 17px;
+}
+
+.video-btn {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.video-btn:hover {
+  background: var(--secondary);
+}
+
+@media (max-width: 992px) {
+
+  .video-section {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .clinic-video {
+    max-width: 360px;
+  }
+
+  .video-content ul {
+    text-align: left;
+    display: inline-block;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .clinic-video {
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,549 @@
+/* =========================================
+   NAVBAR
+========================================= */
+
+.navbar {
+  width: 100%;
+  background: #ffffff;
+
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================
+   NAVBAR CONTAINER
+========================================= */
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  min-height: 85px;
+
+  gap: 30px;
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.logo {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  cursor: pointer;
+
+  text-decoration: none;
+
+  flex-shrink: 0;
+}
+
+.logo img {
+  width: 60px;
+  height: 60px;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+
+  border: 2px solid #e6f4ee;
+
+  padding: 3px;
+
+  background: #ffffff;
+
+  box-shadow: 0 3px 10px rgba(11, 110, 79, 0.08);
+
+  transition: 0.3s ease;
+}
+
+.logo:hover img {
+  transform: scale(1.04);
+}
+
+.logo h2 {
+  font-size: 2.2rem;
+
+  font-weight: 700;
+
+  margin: 0;
+
+  color: #0b6e4f;
+
+  white-space: nowrap;
+}
+
+.logo span {
+  color: #d32f2f;
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.nav-menu {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 30px;
+
+  margin-left: auto;
+}
+
+.nav-menu a {
+  position: relative;
+
+  text-decoration: none;
+
+  font-size: 17px;
+
+  font-weight: 500;
+
+  color: #222;
+
+  white-space: nowrap;
+
+  transition: color 0.3s ease;
+}
+
+.nav-menu a:hover {
+  color: var(--primary);
+}
+
+
+/* Underline effect */
+
+.nav-menu a:not(.register-btn):not(.admin-btn)::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  bottom: -7px;
+
+  width: 0;
+
+  height: 2px;
+
+  border-radius: 10px;
+
+  background: var(--primary);
+
+  transition: width 0.3s ease;
+}
+
+.nav-menu a:not(.register-btn):not(.admin-btn):hover::after {
+  width: 100%;
+}
+
+
+/* =========================================
+   REGISTER BUTTON
+========================================= */
+
+.register-btn {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 10px 20px;
+
+  background: var(--primary);
+
+  color: #ffffff !important;
+
+  border: 2px solid var(--primary);
+
+  border-radius: 10px;
+
+  text-decoration: none;
+
+  font-size: 15px !important;
+
+  font-weight: 600 !important;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.register-btn:hover {
+  background: #ffffff;
+
+  color: var(--primary) !important;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 5px 15px rgba(11, 110, 79, 0.15);
+}
+
+
+/* =========================================
+   CUSTOMER / ADMIN LOGOUT
+========================================= */
+
+.logout-btn {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 10px 20px;
+
+  background: var(--primary);
+
+  color: #ffffff !important;
+
+  border: 2px solid var(--primary);
+
+  border-radius: 10px;
+
+  text-decoration: none;
+
+  font-size: 15px !important;
+
+  font-weight: 600 !important;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.logout-btn:hover {
+   background: #ffffff;
+
+  color: var(--primary) !important;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 5px 15px rgba(11, 110, 79, 0.15);
+}
+
+
+
+/* =========================================
+   ADMIN DASHBOARD
+========================================= */
+
+.admin-btn {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-decoration: none;
+
+  color: var(--primary) !important;
+
+  background: #eef8f4;
+
+  padding: 9px 15px;
+
+  border-radius: 9px;
+
+  font-size: 15px !important;
+
+  font-weight: 600 !important;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.admin-btn:hover {
+  background: var(--primary);
+
+  color: #ffffff !important;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================
+   RIGHT SIDE
+========================================= */
+
+.nav-right {
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+}
+
+
+/* =========================================
+   MOBILE MENU BUTTON
+========================================= */
+
+.menu-btn {
+  display: none;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: transparent;
+
+  border: none;
+
+  cursor: pointer;
+
+  color: var(--primary);
+
+  padding: 5px;
+
+  transition: 0.3s ease;
+}
+
+.menu-btn:hover {
+  transform: scale(1.05);
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1150px) {
+
+  .nav-menu {
+    gap: 20px;
+  }
+
+  .nav-menu a {
+    font-size: 16px;
+  }
+
+  .logo h2 {
+    font-size: 2rem;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE / TABLET MENU
+========================================= */
+
+@media (max-width: 992px) {
+
+  .navbar-container {
+    min-height: 80px;
+  }
+
+
+  /* Logo */
+
+  .logo img {
+    width: 54px;
+    height: 54px;
+  }
+
+  .logo h2 {
+    font-size: 1.7rem;
+  }
+
+
+  /* Hamburger */
+
+  .menu-btn {
+    display: flex;
+  }
+
+
+  /* Mobile Navigation */
+
+  .nav-menu {
+    position: fixed;
+
+    top: 80px;
+
+    right: -100%;
+
+    width: 290px;
+
+    max-width: 85%;
+
+    height: calc(100vh - 80px);
+
+    background: #ffffff;
+
+    flex-direction: column;
+
+    justify-content: flex-start;
+
+    align-items: stretch;
+
+    gap: 0;
+
+    margin: 0;
+
+    padding: 35px 28px;
+
+    box-sizing: border-box;
+
+    overflow-y: auto;
+
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.08);
+
+    transition: right 0.35s ease;
+  }
+
+
+  /* Open menu */
+
+  .nav-menu.active {
+    right: 0;
+  }
+
+
+  /* Mobile links */
+
+  .nav-menu a {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 12px 0;
+
+    font-size: 17px;
+
+    border-bottom: 1px solid #edf2ef;
+  }
+
+
+  .nav-menu a::after {
+    display: none !important;
+  }
+
+
+  /* Register */
+
+  .register-btn {
+    margin-top: 10px;
+
+    padding: 12px 20px !important;
+
+    border: 2px solid var(--primary) !important;
+
+    border-radius: 10px !important;
+  }
+
+
+  /* Admin */
+
+  .admin-btn {
+    margin-top: 10px;
+
+    padding: 12px 15px !important;
+
+    border-radius: 10px !important;
+
+    text-align: center;
+  }
+
+
+  /* Logout */
+
+  .logout-btn {
+    width: 100%;
+
+    justify-content: flex-start;
+
+    padding: 12px 0;
+
+    font-size: 17px;
+
+    border-bottom: 1px solid #edf2ef;
+  }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+  .navbar-container {
+    min-height: 72px;
+  }
+
+
+  .logo {
+    gap: 9px;
+  }
+
+
+  .logo img {
+    width: 48px;
+    height: 48px;
+  }
+
+
+  .logo h2 {
+    font-size: 1.45rem;
+  }
+
+
+  .nav-menu {
+    top: 72px;
+
+    height: calc(100vh - 72px);
+
+    width: 100%;
+
+    max-width: 100%;
+
+    padding: 30px 24px;
+  }
+
+}
+
+
+/* =========================================
+   VERY SMALL MOBILE
+========================================= */
+
+@media (max-width: 400px) {
+
+  .logo img {
+    width: 44px;
+    height: 44px;
+  }
+
+  .logo h2 {
+    font-size: 1.25rem;
+  }
+
+}
