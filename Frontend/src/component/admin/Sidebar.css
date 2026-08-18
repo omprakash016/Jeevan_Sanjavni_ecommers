@@ -1,0 +1,317 @@
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 260px;
+  height: 100vh;
+
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 25px 15px 20px;
+
+  background: #087653;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  box-sizing: border-box;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+/* =========================================================
+   LOGO AREA
+========================================================= */
+
+.sidebar-logo {
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  text-align: center;
+
+  padding: 5px 0 30px;
+}
+
+.sidebar-logo img {
+
+  width: 105px;
+  height: 105px;
+
+  object-fit: cover;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  border: 5px solid rgba(255, 255, 255, 0.9);
+
+  box-shadow:
+    0 5px 15px rgba(0, 0, 0, 0.12);
+}
+
+.sidebar-logo h2 {
+
+  margin: 18px 0 0;
+
+  color: #ffffff;
+
+  font-size: 28px;
+
+  font-weight: 800;
+
+  line-height: 1.2;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.sidebar-nav {
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+
+  width: 100%;
+}
+
+
+.sidebar-nav a {
+
+  width: 100%;
+
+  min-height: 60px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 0 20px;
+
+  border-radius: 13px;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 17px;
+
+  font-weight: 600;
+
+  box-sizing: border-box;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.2s ease;
+}
+
+
+.sidebar-nav a svg {
+
+  flex-shrink: 0;
+}
+
+
+.sidebar-nav a:hover {
+
+  background: rgba(255, 255, 255, 0.12);
+
+  transform: translateX(2px);
+}
+
+
+/* Active */
+
+.sidebar-nav a.active {
+
+  background: #ffffff;
+
+  color: #087653;
+
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+.sidebar-logout {
+
+  width: 100%;
+
+  min-height: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-top: auto;
+
+  padding: 0 20px;
+
+  border: none;
+
+  border-radius: 13px;
+
+  background: #ef2b2b;
+
+  color: #ffffff;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    transform 0.2s ease;
+}
+
+
+.sidebar-logout:hover {
+
+  background: #d92323;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.sidebar-close {
+
+  display: none;
+
+  position: absolute;
+
+  top: 15px;
+  right: 15px;
+
+  width: 38px;
+  height: 38px;
+
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: rgba(255, 255, 255, 0.14);
+
+  color: #ffffff;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .sidebar {
+
+    transform: translateX(-100%);
+
+    box-shadow:
+      8px 0 25px rgba(0, 0, 0, 0.12);
+  }
+
+
+  .sidebar.sidebar-open {
+
+    transform: translateX(0);
+  }
+
+
+  .sidebar-close {
+
+    display: flex;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .sidebar {
+
+    width: min(290px, 82vw);
+
+    padding: 22px 13px 18px;
+  }
+
+
+  .sidebar-logo {
+
+    padding-top: 15px;
+
+    padding-bottom: 25px;
+  }
+
+
+  .sidebar-logo img {
+
+    width: 90px;
+    height: 90px;
+  }
+
+
+  .sidebar-logo h2 {
+
+    font-size: 24px;
+
+    margin-top: 14px;
+  }
+
+
+  .sidebar-nav a {
+
+    min-height: 54px;
+
+    padding: 0 17px;
+
+    font-size: 15px;
+  }
+
+
+  .sidebar-logout {
+
+    min-height: 54px;
+
+    font-size: 15px;
+  }
+
+}

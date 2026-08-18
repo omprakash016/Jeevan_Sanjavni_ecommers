@@ -1,9 +1,10 @@
 import Container from "../ui/Container";
-import { Menu, X } from "lucide-react";
+import { Menu, X , ShoppingCart} from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+
 
 import logo from "../../assets/logo/logo.jpeg";
 import "./Navbar.css";
@@ -19,6 +20,10 @@ const Navbar = () => {
 
   const { user, isAuthenticated } = useSelector(
     (state) => state.auth
+  );
+
+  const { totalQuantity } = useSelector(
+    (state) => state.cart
   );
 
   const closeMenu = () => {
@@ -86,21 +91,21 @@ const Navbar = () => {
             </Link>
 
             <Link
-              to="/#services"
+              to="/services"
               onClick={closeMenu}
             >
               Services
             </Link>
 
             <Link
-              to="/#doctors"
+              to="/doctors"
               onClick={closeMenu}
             >
               Doctors
             </Link>
 
             <Link
-              to="/#about"
+              to="/about"
               onClick={closeMenu}
             >
               About
@@ -114,7 +119,7 @@ const Navbar = () => {
             </Link>
 
             <Link
-              to="/#contact"
+              to="/contact"
               onClick={closeMenu}
             >
               Contact
@@ -141,12 +146,6 @@ const Navbar = () => {
             {isAuthenticated &&
               user?.role === "customer" && (
                 <>
-                  <Link
-                    to="/cart"
-                    onClick={closeMenu}
-                  >
-                    Cart
-                  </Link>
 
                   <Link
                     to="/profile"
@@ -197,6 +196,24 @@ const Navbar = () => {
           <div className="nav-right">
 
             {/* Mobile Menu Button */}
+
+             {isAuthenticated && user?.role === "customer" && (
+
+                <Link
+                  to="/cart"
+                  className="cart-link"
+                >
+                  <ShoppingCart size={24} />
+
+                  {totalQuantity > 0 && (
+                    <span className="cart-count">
+                      {totalQuantity}
+                    </span>
+                  )}
+
+                </Link>
+
+              )}
 
             <button
               type="button"

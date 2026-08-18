@@ -1,6 +1,11 @@
 import Order from "../order/order.model.js";
 import { validationResult } from "express-validator";
 import Product from "../product/product.model.js";
+import {
+  ORDER_STATUS,
+  PAYMENT_STATUS,
+} from "../../constants/orderStatus.js";
+import User from "../auth/user.model.js"
 
 export const getAllOrders = async (req, res) => {
   try {
@@ -39,26 +44,30 @@ export const getAllOrders = async (req, res) => {
     }
 
     if (search.trim()) {
-      filter.$or = [
-        {
-          "address.fullName": {
-            $regex: search,
-            $options: "i",
-          },
-        },
-        {
-          "address.phone": {
-            $regex: search,
-            $options: "i",
-          },
-        },
-        {
-          _id: search.match(/^[0-9a-fA-F]{24}$/)
-            ? search
-            : undefined,
-        },
-      ].filter(Boolean);
-    }
+  filter.$or = [
+    {
+      "address.fullName": {
+        $regex: search,
+        $options: "i",
+      },
+    },
+    {
+      "address.phone": {
+        $regex: search,
+        $options: "i",
+      },
+    },
+    {
+      orderNumber: {
+        $regex: search,
+        $options: "i",
+      },
+    },
+    ...(search.match(/^[0-9a-fA-F]{24}$/)
+      ? [{ _id: search }]
+      : []),
+  ];
+}
 
     // Sorting
 
@@ -197,7 +206,15 @@ export const updateOrderStatus = async (req, res) => {
     }
 
     const { id } = req.params;
-    const { orderStatus } = req.body;
+
+    const {
+      orderStatus,
+      paymentStatus,
+    } = req.body;
+
+    // ========================================
+    // FIND ORDER
+    // ========================================
 
     const order = await Order.findById(id);
 
@@ -208,72 +225,205 @@ export const updateOrderStatus = async (req, res) => {
       });
     }
 
-    // Allowed Status Transitions
-    const allowedTransitions = {
-      [ORDER_STATUS.PENDING]: [
-        ORDER_STATUS.CONFIRMED,
-        ORDER_STATUS.CANCELLED,
-      ],
 
-      [ORDER_STATUS.CONFIRMED]: [
-        ORDER_STATUS.PROCESSING,
-        ORDER_STATUS.CANCELLED,
-      ],
-
-      [ORDER_STATUS.PROCESSING]: [
-        ORDER_STATUS.SHIPPED,
-        ORDER_STATUS.CANCELLED,
-      ],
-
-      [ORDER_STATUS.SHIPPED]: [
-        ORDER_STATUS.DELIVERED,
-      ],
-
-      [ORDER_STATUS.DELIVERED]: [],
-
-      [ORDER_STATUS.CANCELLED]: [],
-    };
-    // Same Status Check
-    if (order.orderStatus === orderStatus) {
-      return res.status(400).json({
-        success: false,
-        message: `Order is already ${orderStatus}`,
-      });
-    }
-
-    // Validate Transition
-    const isAllowed =
-      allowedTransitions[order.orderStatus]?.includes(orderStatus);
-
-    if (!isAllowed) {
-      return res.status(400).json({
-        success: false,
-        message: `Cannot change order status from "${order.orderStatus}" to "${orderStatus}"`,
-      });
-    }
-
-    // Update Order Status
-    order.orderStatus = orderStatus;
+    // ========================================
+    // MAKE SURE SOMETHING IS BEING UPDATED
+    // ========================================
 
     if (
-      order.paymentMethod === "COD" &&
-      orderStatus === ORDER_STATUS.DELIVERED
+      orderStatus === undefined &&
+      paymentStatus === undefined
     ) {
-      order.paymentStatus = PAYMENT_STATUS.PAID;
+      return res.status(400).json({
+        success: false,
+        message:
+          "Please provide order status or payment status",
+      });
     }
+
+
+    // ========================================
+    // UPDATE PAYMENT STATUS
+    // ========================================
+
+    if (paymentStatus !== undefined) {
+
+      // Only COD orders can have their
+      // payment manually marked successful.
+
+      if (order.paymentMethod !== "COD") {
+        return res.status(400).json({
+          success: false,
+          message:
+            "Only COD orders can be manually marked as Successful",
+        });
+      }
+
+
+      // Successful payment cannot be changed
+      // back to Pending.
+
+      if (
+        order.paymentStatus ===
+          PAYMENT_STATUS.SUCCESSFUL &&
+        paymentStatus ===
+          PAYMENT_STATUS.PENDING
+      ) {
+        return res.status(400).json({
+          success: false,
+          message:
+            "Successful payment cannot be changed back to Pending",
+        });
+      }
+
+
+      // If already successful
+
+      if (
+        order.paymentStatus ===
+          PAYMENT_STATUS.SUCCESSFUL &&
+        paymentStatus ===
+          PAYMENT_STATUS.SUCCESSFUL
+      ) {
+        return res.status(400).json({
+          success: false,
+          message:
+            "Payment is already Successful",
+        });
+      }
+
+
+      // Only allow:
+      // Pending → Successful
+
+      if (
+        order.paymentStatus ===
+          PAYMENT_STATUS.PENDING &&
+        paymentStatus ===
+          PAYMENT_STATUS.SUCCESSFUL
+      ) {
+        order.paymentStatus =
+          PAYMENT_STATUS.SUCCESSFUL;
+      }
+
+    }
+
+
+    // ========================================
+    // UPDATE ORDER STATUS
+    // ========================================
+
+    if (orderStatus !== undefined) {
+
+      // Same status check
+
+      if (
+        order.orderStatus === orderStatus
+      ) {
+        return res.status(400).json({
+          success: false,
+          message:
+            `Order is already ${orderStatus}`,
+        });
+      }
+
+
+      // Allowed Status Transitions
+
+      const allowedTransitions = {
+
+        [ORDER_STATUS.PENDING]: [
+          ORDER_STATUS.CONFIRMED,
+          ORDER_STATUS.CANCELLED,
+        ],
+
+        [ORDER_STATUS.CONFIRMED]: [
+          ORDER_STATUS.PROCESSING,
+          ORDER_STATUS.CANCELLED,
+        ],
+
+        [ORDER_STATUS.PROCESSING]: [
+          ORDER_STATUS.SHIPPED,
+          ORDER_STATUS.CANCELLED,
+        ],
+
+        [ORDER_STATUS.SHIPPED]: [
+          ORDER_STATUS.DELIVERED,
+        ],
+
+        [ORDER_STATUS.DELIVERED]: [],
+
+        [ORDER_STATUS.CANCELLED]: [],
+      };
+
+
+      const isAllowed =
+        allowedTransitions[
+          order.orderStatus
+        ]?.includes(orderStatus);
+
+
+      if (!isAllowed) {
+        return res.status(400).json({
+          success: false,
+          message:
+            `Cannot change order status from "${order.orderStatus}" to "${orderStatus}"`,
+        });
+      }
+
+
+      // Update order status
+
+      order.orderStatus = orderStatus;
+
+
+      // ========================================
+      // COD + DELIVERED
+      // AUTOMATICALLY MARK PAYMENT SUCCESSFUL
+      // ========================================
+
+      if (
+        order.paymentMethod === "COD" &&
+        orderStatus ===
+          ORDER_STATUS.DELIVERED
+      ) {
+        order.paymentStatus =
+          PAYMENT_STATUS.SUCCESSFUL;
+      }
+
+    }
+
+
+    // ========================================
+    // SAVE
+    // ========================================
 
     await order.save();
 
+
+    // ========================================
+    // RESPONSE
+    // ========================================
+
     return res.status(200).json({
       success: true,
-      message: "Order status updated successfully",
+      message:
+        paymentStatus !== undefined &&
+        orderStatus === undefined
+          ? "Payment status updated successfully"
+          : "Order updated successfully",
+
       data: {
         order,
       },
     });
 
   } catch (error) {
-    console.error(error);
+
+    console.error(
+      "Update Order Status Error:",
+      error
+    );
 
     return res.status(500).json({
       success: false,
@@ -281,7 +431,6 @@ export const updateOrderStatus = async (req, res) => {
     });
   }
 };
-
 //Dashboard statistics for admin
 
 

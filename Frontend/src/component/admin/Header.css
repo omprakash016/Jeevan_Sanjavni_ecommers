@@ -1,0 +1,271 @@
+.admin-header {
+
+  width: 100%;
+
+  min-height: 92px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 0 30px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e9efec;
+
+  box-sizing: border-box;
+}
+
+
+/* LEFT */
+
+.header-left {
+
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+}
+
+
+.header-left h1 {
+
+  margin: 0;
+
+  color: #02720e;
+
+  font-size: 25px;
+
+  font-weight: 800;
+}
+
+
+.header-left p {
+
+  margin: 3px 0 0;
+
+  color: #7d8b93;
+
+  font-size: 12px;
+}
+
+
+/* MENU */
+
+.header-menu-btn {
+
+  width: 42px;
+  height: 42px;
+
+  display: none;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: #eef5f2;
+
+  color: #087653;
+
+  cursor: pointer;
+}
+
+
+/* RIGHT */
+
+.header-right {
+
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  flex-shrink: 0;
+}
+
+
+.header-icon-btn {
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: #f3f6f5;
+
+  color: #344957;
+
+  cursor: pointer;
+}
+
+
+.header-profile {
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 8px 12px;
+
+  border-radius: 10px;
+
+  background: #f2f7f5;
+
+  color: #263f50;
+}
+
+
+.header-profile-info {
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+.header-profile-info strong {
+
+  font-size: 11px;
+}
+
+
+.header-profile-info span {
+
+  margin-top: 2px;
+
+  color: #89969d;
+
+  font-size: 8px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .admin-header {
+
+    min-height: 75px;
+
+    padding: 0 20px;
+  }
+
+
+  .header-menu-btn {
+
+    display: flex;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .admin-header {
+
+    min-height: 68px;
+
+    padding: 0 13px;
+  }
+
+
+  .header-left {
+
+    gap: 9px;
+  }
+
+
+  .header-left h1 {
+
+    font-size: 18px;
+  }
+
+
+  .header-left p {
+
+    font-size: 9px;
+  }
+
+
+  .header-menu-btn {
+
+    width: 38px;
+    height: 38px;
+  }
+
+
+  .header-right {
+
+    gap: 7px;
+  }
+
+
+  .header-icon-btn {
+
+    width: 36px;
+    height: 36px;
+  }
+
+
+  .header-profile {
+
+    padding: 5px;
+
+    background: transparent;
+  }
+
+
+  .header-profile-info {
+
+    display: none;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .admin-header {
+
+    padding: 0 10px;
+  }
+
+
+  .header-left h1 {
+
+    font-size: 16px;
+  }
+
+
+  .header-left p {
+
+    display: none;
+  }
+
+}

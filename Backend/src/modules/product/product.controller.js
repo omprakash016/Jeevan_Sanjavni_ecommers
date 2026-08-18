@@ -470,3 +470,27 @@ export const restoreProduct = async (req, res) => {
         });
     }
 };
+
+
+export const getDeletedProducts = async (req, res) => {
+  try {
+    const products = await Product.find({
+      isDeleted: true,
+    }).sort({ deletedAt: -1 });
+
+    return res.status(200).json({
+      success: true,
+      message: "Deleted products fetched successfully",
+      data: {
+        products,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};

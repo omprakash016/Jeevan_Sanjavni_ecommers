@@ -1,5 +1,5 @@
 import express from "express";
-import { createProduct ,getAllProducts ,getProductBySlug, updateProduct ,deleteProduct ,restoreProduct} from "./product.controller.js";
+import { createProduct ,getAllProducts ,getProductBySlug, updateProduct ,deleteProduct ,restoreProduct ,getDeletedProducts} from "./product.controller.js";
 import { createProductValidation ,updateProductValidation } from "./product.validation.js";
 import upload from "../../middleware/upload.middleware.js";
 import { protect, isAdmin } from "../../middleware/auth.middleware.js";
@@ -15,13 +15,31 @@ router.post(
   createProduct
 );
 
-router.get("/", getAllProducts);
+router.get("/",
+   getAllProducts);
 
-router.get("/:slug", getProductBySlug);
+router.get("/:slug", 
+  getProductBySlug);
 
-router.put("/:id", protect, isAdmin, upload.array("images", 6), updateProductValidation, updateProduct);
+router.put("/:id", 
+  protect, isAdmin, 
+  upload.array("images", 6),
+   updateProductValidation, 
+   updateProduct);
 
-router.delete("/:id", protect, isAdmin, deleteProduct);
-router.patch("/:id/restore", protect, isAdmin, restoreProduct);
+router.delete("/:id",
+   protect, 
+   isAdmin, 
+   deleteProduct);
+router.patch("/:id/restore",
+   protect, 
+   isAdmin,
+    restoreProduct);
 
+router.get(
+  "/admin/deleted",
+  protect,
+  isAdmin,
+  getDeletedProducts
+);
 export default router;
