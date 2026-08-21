@@ -51,7 +51,7 @@ const ProductVideo = () => {
               playsInline
               controls
               className="clinic-video"
-            >
+            > 
               <source
                 src={video}
                 type="video/mp4"
