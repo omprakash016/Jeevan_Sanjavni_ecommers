@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Order from "../order/order.model.js";
 import { validationResult } from "express-validator";
 import Product from "../product/product.model.js";
@@ -7,6 +8,7 @@ import {
 } from "../../constants/orderStatus.js";
 import User from "../auth/user.model.js"
 
+import ROLES  from "../../constants/roles.js"
 export const getAllOrders = async (req, res) => {
   try {
     // Query Parameters
@@ -799,5 +801,296 @@ export const getTopSellingProducts = async (req, res) => {
       message: "Internal Server Error",
     });
 
+  }
+};
+
+
+// ======================================================
+// GET ALL CUSTOMERS
+// ======================================================
+
+export const getAllCustomers = async (req, res) => {
+  try {
+    const {
+      page = 1,
+      limit = 10,
+      search = "",
+      status = "all",
+      sort = "latest",
+    } = req.query;
+
+    const currentPage = Math.max(Number(page), 1);
+    const pageSize = Math.max(Number(limit), 1);
+    const skip = (currentPage - 1) * pageSize;
+
+    const filter = {
+      role: "customer",
+    };
+
+    // Search
+    if (search.trim()) {
+      filter.$or = [
+        {
+          fullName: {
+            $regex: search.trim(),
+            $options: "i",
+          },
+        },
+        {
+          email: {
+            $regex: search.trim(),
+            $options: "i",
+          },
+        },
+        {
+          phone: {
+            $regex: search.trim(),
+            $options: "i",
+          },
+        },
+      ];
+    }
+
+    // Active / blocked filter
+    if (status === "active") {
+      filter.isActive = true;
+    }
+
+    if (status === "blocked") {
+      filter.isActive = false;
+    }
+
+    // Sorting
+    let sortOption = {
+      createdAt: -1,
+    };
+
+    if (sort === "oldest") {
+      sortOption = {
+        createdAt: 1,
+      };
+    }
+
+    if (sort === "name") {
+      sortOption = {
+        fullName: 1,
+      };
+    }
+
+    // Count
+    const totalCustomers = await User.countDocuments(filter);
+
+    // Customers
+    const customers = await User.find(filter)
+      .select(
+        "_id fullName email phone profileImage isVerified isActive createdAt"
+      )
+      .sort(sortOption)
+      .skip(skip)
+      .limit(pageSize)
+      .lean();
+
+    const totalPages = Math.ceil(
+      totalCustomers / pageSize
+    );
+
+    return res.status(200).json({
+      success: true,
+
+      data: {
+        customers,
+
+        pagination: {
+          currentPage,
+          totalPages,
+          totalCustomers,
+          limit: pageSize,
+          hasNextPage:
+            currentPage < totalPages,
+          hasPreviousPage:
+            currentPage > 1,
+        },
+      },
+    });
+  } catch (error) {
+    console.error(
+      "Get All Customers Error:",
+      error
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
+
+// ======================================================
+// GET SINGLE CUSTOMER
+// ======================================================
+
+export const getSingleCustomer = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        errors: errors.array(),
+      });
+    }
+
+    const { id } = req.params;
+
+    const customer = await User.findOne({
+      _id: id,
+      role: ROLES.CUSTOMER,
+    })
+      .select(
+        "_id fullName email phone profileImage isVerified isActive createdAt updatedAt"
+      )
+      .lean();
+
+    if (!customer) {
+      return res.status(404).json({
+        success: false,
+        message: "Customer not found",
+      });
+    }
+
+    // Customer order statistics
+    const [
+      totalOrders,
+      deliveredOrders,
+      cancelledOrders,
+      totalSpentResult,
+    ] = await Promise.all([
+      Order.countDocuments({
+        user: id,
+      }),
+
+      Order.countDocuments({
+        user: id,
+        orderStatus: ORDER_STATUS.DELIVERED,
+      }),
+
+      Order.countDocuments({
+        user: id,
+        orderStatus: ORDER_STATUS.CANCELLED,
+      }),
+
+      Order.aggregate([
+        {
+          $match: {
+            user: new mongoose.Types.ObjectId(id),
+            orderStatus:
+              ORDER_STATUS.DELIVERED,
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            totalSpent: {
+              $sum: "$subtotal",
+            },
+          },
+        },
+      ]),
+    ]);
+
+    const totalSpent =
+      totalSpentResult.length > 0
+        ? totalSpentResult[0].totalSpent
+        : 0;
+
+    return res.status(200).json({
+      success: true,
+
+      data: {
+        customer,
+
+        statistics: {
+          totalOrders,
+          deliveredOrders,
+          cancelledOrders,
+          totalSpent,
+        },
+      },
+    });
+  } catch (error) {
+    console.error(
+      "Get Single Customer Error:",
+      error
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
+
+// ======================================================
+// GET CUSTOMER ORDERS
+// ======================================================
+
+export const getCustomerOrders = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        errors: errors.array(),
+      });
+    }
+
+    const { id } = req.params;
+
+    // Make sure customer exists
+    const customer = await User.findOne({
+      _id: id,
+      role: "customer",
+    })
+      .select("_id")
+      .lean();
+
+    if (!customer) {
+      return res.status(404).json({
+        success: false,
+        message: "Customer not found",
+      });
+    }
+
+    const orders = await Order.find({
+      user: id,
+    })
+      .select(
+        "_id orderNumber subtotal totalItems totalQuantity paymentMethod paymentStatus orderStatus createdAt"
+      )
+      .sort({
+        createdAt: -1,
+      })
+      .lean();
+
+    return res.status(200).json({
+      success: true,
+
+      data: {
+        orders,
+      },
+    });
+  } catch (error) {
+    console.error(
+      "Get Customer Orders Error:",
+      error
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
   }
 };

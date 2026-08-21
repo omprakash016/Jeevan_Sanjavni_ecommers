@@ -42,3 +42,10 @@ export const updateOrderStatusValidation = [
     .withMessage("Invalid payment status"),
 
 ];
+
+
+export const getCustomerValidation = [
+  param("id")
+    .isMongoId()
+    .withMessage("Invalid Customer ID"),
+];

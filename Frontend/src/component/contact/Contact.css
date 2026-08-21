@@ -71,3 +71,32 @@ padding:70px 0;
 }
 
 }
+
+/* =========================================
+   INSTAGRAM
+========================================= */
+
+.instagram-card {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.instagram-card:hover {
+  transform: translateY(-4px);
+}
+
+.instagram-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.instagram-card h3,
+.instagram-card p {
+  text-decoration: none;
+}

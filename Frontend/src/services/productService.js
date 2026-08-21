@@ -12,6 +12,17 @@ export const getProducts = async (params = {}) => {
   return response.data;
 };
 
+export const getDeletedProducts = async (params = {}) => {
+  const response = await api.get(
+    "/admin/products/deleted",
+    {
+      params,
+    }
+  );
+
+  return response.data;
+};
+
 
 // ========================================
 // GET PRODUCT BY SLUG
@@ -82,3 +93,4 @@ export const restoreProduct = async (productId) => {
 
   return response.data;
 };
+

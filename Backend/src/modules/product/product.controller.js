@@ -470,27 +470,146 @@ export const restoreProduct = async (req, res) => {
         });
     }
 };
+// ========================================
+// GET DELETED PRODUCTS - ADMIN
+// ========================================
 
-
-export const getDeletedProducts = async (req, res) => {
+export const getDeletedProducts = async (
+  req,
+  res
+) => {
   try {
-    const products = await Product.find({
+
+    let {
+      page = 1,
+      limit = 10,
+      search = "",
+      sort = "newest",
+    } = req.query;
+
+    page = Number(page);
+    limit = Number(limit);
+
+    const query = {
       isDeleted: true,
-    }).sort({ deletedAt: -1 });
+    };
+
+
+    // ========================================
+    // SEARCH
+    // ========================================
+
+    if (search) {
+
+      query.name = {
+        $regex: search,
+        $options: "i",
+      };
+
+    }
+
+
+    // ========================================
+    // SORT
+    // ========================================
+
+    let sortOption;
+
+    switch (sort) {
+
+      case "oldest":
+
+        sortOption = {
+          deletedAt: 1,
+        };
+
+        break;
+
+      case "name":
+
+        sortOption = {
+          name: 1,
+        };
+
+        break;
+
+      default:
+
+        sortOption = {
+          deletedAt: -1,
+        };
+
+    }
+
+
+    // ========================================
+    // COUNT
+    // ========================================
+
+    const totalProducts =
+      await Product.countDocuments(query);
+
+
+    // ========================================
+    // GET PRODUCTS
+    // ========================================
+
+    const products =
+      await Product.find(query)
+        .sort(sortOption)
+        .skip((page - 1) * limit)
+        .limit(limit);
+
+
+    // ========================================
+    // RESPONSE
+    // ========================================
 
     return res.status(200).json({
+
       success: true,
-      message: "Deleted products fetched successfully",
+
+      message:
+        "Deleted products fetched successfully",
+
       data: {
+
         products,
+
+        pagination: {
+
+          totalProducts,
+
+          currentPage: page,
+
+          totalPages:
+            Math.ceil(
+              totalProducts / limit
+            ),
+
+          limit,
+
+        },
+
       },
+
     });
+
   } catch (error) {
-    console.error(error);
+
+    console.error(
+      "Get Deleted Products Error:",
+      error
+    );
 
     return res.status(500).json({
+
       success: false,
-      message: "Internal Server Error",
+
+      message:
+        "Internal Server Error",
+
     });
+
   }
 };

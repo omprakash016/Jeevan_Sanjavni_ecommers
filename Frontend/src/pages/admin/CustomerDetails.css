@@ -1,0 +1,553 @@
+.customer-details-page {
+  min-height: 100vh;
+  background: #f5f8f7;
+  padding: 30px 0 60px;
+  color: #18324b;
+}
+
+
+/* =========================
+   BACK BUTTON
+========================= */
+
+.customer-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: none;
+  background: transparent;
+  color: #087957;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+
+/* =========================
+   PROFILE
+========================= */
+
+.customer-profile-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #fff;
+  padding: 28px;
+  border-radius: 20px;
+  border: 1px solid #e1ebe7;
+  box-shadow: 0 8px 30px rgba(22, 61, 48, 0.06);
+}
+
+.customer-details-avatar {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  background: #e6f5ef;
+  color: #087957;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.customer-details-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.customer-profile-main {
+  flex: 1;
+}
+
+.customer-label {
+  color: #087957;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.customer-profile-main h1 {
+  margin: 4px 0 10px;
+  font-size: 32px;
+}
+
+.customer-contact-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.customer-contact-line span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #687a84;
+  font-size: 14px;
+}
+
+.customer-contact-line svg {
+  color: #087957;
+}
+
+.customer-profile-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.detail-active,
+.detail-blocked {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 13px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.detail-active {
+  background: #e6f7ef;
+  color: #16804d;
+}
+
+.detail-blocked {
+  background: #fdeaea;
+  color: #d23838;
+}
+
+.customer-profile-status small {
+  color: #8b9995;
+}
+
+
+/* =========================
+   STATISTICS
+========================= */
+
+.customer-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin: 22px 0;
+}
+
+.customer-stat-card {
+  background: #fff;
+  border: 1px solid #e1ebe7;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.stat-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.stat-icon svg {
+  width: 21px;
+}
+
+.stat-icon.green {
+  background: #e7f7ef;
+  color: #087957;
+}
+
+.stat-icon.blue {
+  background: #e9f4ff;
+  color: #1976b8;
+}
+
+.stat-icon.red {
+  background: #fdecec;
+  color: #d32f2f;
+}
+
+.stat-icon.gold {
+  background: #fff5db;
+  color: #aa7400;
+  font-size: 20px;
+}
+
+.customer-stat-card div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.customer-stat-card span {
+  color: #7d8c89;
+  font-size: 13px;
+}
+
+.customer-stat-card strong {
+  font-size: 21px;
+  color: #18324b;
+}
+
+
+/* =========================
+   DETAILS GRID
+========================= */
+
+.customer-details-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.customer-info-card,
+.customer-orders-card {
+  background: #fff;
+  border: 1px solid #e1ebe7;
+  border-radius: 18px;
+  box-shadow: 0 7px 25px rgba(22, 61, 48, 0.05);
+  overflow: hidden;
+}
+
+.customer-card-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  border-bottom: 1px solid #edf2f0;
+}
+
+.customer-card-title > svg {
+  color: #087957;
+}
+
+.customer-card-title h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.customer-card-title span {
+  display: block;
+  margin-top: 3px;
+  color: #87948f;
+  font-size: 12px;
+}
+
+
+/* =========================
+   CUSTOMER INFO
+========================= */
+
+.customer-info-list {
+  padding: 5px 20px 20px;
+}
+
+.customer-info-list > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 0;
+  border-bottom: 1px solid #edf2f0;
+}
+
+.customer-info-list > div:last-child {
+  border-bottom: none;
+}
+
+.customer-info-list span {
+  color: #87948f;
+  font-size: 12px;
+}
+
+.customer-info-list strong {
+  color: #253d4c;
+  font-size: 14px;
+  word-break: break-word;
+}
+
+.verified-text {
+  color: #16804d !important;
+}
+
+.unverified-text {
+  color: #a36c00 !important;
+}
+
+
+/* =========================
+   ORDERS
+========================= */
+
+.customer-orders-list {
+  padding: 5px 20px 20px;
+}
+
+.customer-order-row {
+  display: grid;
+  grid-template-columns: 1.3fr 0.8fr 120px 75px;
+  align-items: center;
+  gap: 15px;
+  padding: 16px 0;
+  border-bottom: 1px solid #edf2f0;
+}
+
+.customer-order-row:last-child {
+  border-bottom: none;
+}
+
+.order-main {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.order-main strong {
+  color: #18324b;
+}
+
+.order-main span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #899690;
+  font-size: 12px;
+}
+
+.order-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.order-meta span {
+  color: #899690;
+  font-size: 12px;
+}
+
+.order-meta strong {
+  color: #18324b;
+}
+
+.customer-order-status {
+  text-align: center;
+  padding: 6px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.customer-order-status.pending {
+  background: #fff5dc;
+  color: #a36c00;
+}
+
+.customer-order-status.confirmed {
+  background: #e9f4ff;
+  color: #1976b8;
+}
+
+.customer-order-status.processing {
+  background: #f1eaff;
+  color: #7041b7;
+}
+
+.customer-order-status.shipped {
+  background: #e7f2ff;
+  color: #236ca5;
+}
+
+.customer-order-status.delivered {
+  background: #e6f7ef;
+  color: #16804d;
+}
+
+.customer-order-status.cancelled {
+  background: #fdeaea;
+  color: #d23838;
+}
+
+.customer-order-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: none;
+  background: #e9f7f2;
+  color: #087957;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.customer-order-view:hover {
+  background: #087957;
+  color: white;
+}
+
+
+/* =========================
+   EMPTY
+========================= */
+
+.customer-no-orders {
+  text-align: center;
+  padding: 65px 20px;
+  color: #91a09a;
+}
+
+.customer-no-orders svg {
+  color: #b5c8c1;
+}
+
+.customer-no-orders h3 {
+  color: #294052;
+  margin: 10px 0 5px;
+}
+
+.customer-no-orders p {
+  margin: 0;
+  font-size: 14px;
+}
+
+
+/* =========================
+   LOADING / NOT FOUND
+========================= */
+
+.customer-details-loading,
+.customer-not-found {
+  min-height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.customer-details-loading svg {
+  color: #087957;
+}
+
+.customer-not-found > svg {
+  color: #b6c7c1;
+}
+
+.customer-not-found button {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  background: #087957;
+  color: #fff;
+  border-radius: 9px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+
+/* =========================
+   SPINNER
+========================= */
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1050px) {
+
+  .customer-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .customer-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+@media (max-width: 750px) {
+
+  .customer-profile-card {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .customer-profile-status {
+    width: 100%;
+    align-items: flex-start;
+    padding-top: 5px;
+  }
+
+  .customer-profile-main h1 {
+    font-size: 27px;
+  }
+
+  .customer-order-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .customer-order-status {
+    text-align: left;
+    width: fit-content;
+  }
+
+  .customer-order-view {
+    width: fit-content;
+  }
+
+}
+
+
+@media (max-width: 520px) {
+
+  .customer-details-page {
+    padding: 20px 0 40px;
+  }
+
+  .customer-profile-card {
+    padding: 20px;
+  }
+
+  .customer-details-avatar {
+    width: 70px;
+    height: 70px;
+  }
+
+  .customer-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .customer-contact-line {
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .customer-order-row {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+}

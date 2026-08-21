@@ -1,26 +1,43 @@
 import { Routes, Route } from "react-router-dom";
-// Layouts
+
+// ================================
+// LAYOUTS
+// ================================
 import MainLayout from "../layouts/MainLayout";
 import AdminLayout from "../layouts/AdminLayout";
 
-// Route Guards
+// ================================
+// ROUTE GUARDS
+// ================================
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
 
-// Public Pages
+// ================================
+// PUBLIC PAGES
+// ================================
 import Home from "../pages/Home";
 import Products from "../pages/Products";
 import ProductDetails from "../pages/ProductDetails";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 
-// Customer Pages
+import Services from ".././component/services/Services";
+import Doctors from ".././component/doctors/Doctor";
+import About from ".././component/about/About";
+import Contact from ".././component/contact/Contact";
+
+// ================================
+// CUSTOMER PAGES
+// ================================
 import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
 import Profile from "../pages/Profile";
 import OrderDetails from "../pages/OrderDetails";
 import Orders from "../pages/Orders";
-// Admin Pages
+
+// ================================
+// ADMIN PAGES
+// ================================
 import Dashboard from "../pages/admin/Dashboard";
 import AdminProducts from "../pages/admin/Products";
 import AdminOrders from "../pages/admin/Orders";
@@ -28,92 +45,182 @@ import AddProduct from "../pages/admin/AddProduct";
 import EditProduct from "../pages/admin/EditProduct";
 import AdminProductDetails from "../pages/admin/AdminProductDetails";
 import AdminOrderDetails from "../pages/admin/AdminOrderDetails";
+import Customers from "../pages/admin/Customer";
+import CustomerDetails from "../pages/admin/CustomerDetails";
+
+
 const AppRoutes = () => {
   return (
     <Routes>
 
-      {/* ================= PUBLIC ================= */}
+      {/* =====================================================
+          PUBLIC ROUTES
+      ===================================================== */}
 
       <Route element={<MainLayout />}>
 
-        <Route path="/" element={<Home />} />
+        {/* Home */}
+        <Route
+          path="/"
+          element={<Home />}
+        />
 
-        <Route path="/products" element={<Products />} />
+        {/* Services */}
+        <Route
+          path="/services"
+          element={<Services />}
+        />
 
+        {/* Doctors */}
+        <Route
+          path="/doctors"
+          element={<Doctors />}
+        />
+
+        {/* About */}
+        <Route
+          path="/about"
+          element={<About />}
+        />
+
+        {/* Products */}
+        <Route
+          path="/products"
+          element={<Products />}
+        />
+
+        {/* Product Details */}
         <Route
           path="/products/:slug"
           element={<ProductDetails />}
         />
 
-        <Route path="/login" element={<Login />} />
+        {/* Contact */}
+        <Route
+          path="/contact"
+          element={<Contact />}
+        />
 
-        <Route path="/register" element={<Register />} />
+        {/* Authentication */}
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        <Route
+          path="/register"
+          element={<Register />}
+        />
 
       </Route>
 
 
-      {/* ================= CUSTOMER ================= */}
+      {/* =====================================================
+          CUSTOMER ROUTES
+      ===================================================== */}
 
       <Route element={<PrivateRoute />}>
 
         <Route element={<MainLayout />}>
 
-          <Route path="/cart" element={<Cart />} />
+          {/* Cart */}
+          <Route
+            path="/cart"
+            element={<Cart />}
+          />
 
-          <Route path="/checkout" element={<Checkout />} />
+          {/* Checkout */}
+          <Route
+            path="/checkout"
+            element={<Checkout />}
+          />
 
-          <Route path="/profile" element={<Profile />} />
-         <Route
-              path="/orders"
-              element={<Orders />}
-        />
-         <Route
-                path="/orders/:id"
-                element={<OrderDetails />}
-              />
+          {/* Profile */}
+          <Route
+            path="/profile"
+            element={<Profile />}
+          />
+
+          {/* Orders */}
+          <Route
+            path="/orders"
+            element={<Orders />}
+          />
+
+          {/* Order Details */}
+          <Route
+            path="/orders/:id"
+            element={<OrderDetails />}
+          />
 
         </Route>
-  
 
       </Route>
 
 
-      {/* ================= ADMIN ================= */}
+      {/* =====================================================
+          ADMIN ROUTES
+      ===================================================== */}
 
       <Route element={<AdminRoute />}>
 
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route
+          path="/admin"
+          element={<AdminLayout />}
+        >
 
-          <Route index element={<Dashboard />} />
+          {/* Dashboard */}
+          <Route
+            index
+            element={<Dashboard />}
+          />
+
+          {/* ================= PRODUCTS ================= */}
 
           <Route
             path="products"
             element={<AdminProducts />}
           />
 
+          <Route
+            path="products/add"
+            element={<AddProduct />}
+          />
 
           <Route
-          path="products/add"
-          element={<AddProduct />}
-        />
+            path="products/:slug"
+            element={<AdminProductDetails />}
+          />
 
-        <Route
-          path="products/:slug"
-          element={<AdminProductDetails />}
-        />
-        <Route
-           path="/admin/products/:slug/edit"
-         element={<EditProduct />}
-      />
-      <Route
+          <Route
+            path="products/:slug/edit"
+            element={<EditProduct />}
+          />
+
+          {/* ================= ORDERS ================= */}
+
+          <Route
             path="orders"
             element={<AdminOrders />}
           />
-     <Route
-      path="orders/:id"
-      element={<AdminOrderDetails />}
-    />
-      
+
+          <Route
+            path="orders/:id"
+            element={<AdminOrderDetails />}
+          />
+
+          {/* ================= CUSTOMERS ================= */}
+
+          <Route
+            path="customers"
+            element={<Customers />}
+          />
+
+          <Route
+            path="customers/:id"
+            element={<CustomerDetails />}
+          />
+
         </Route>
 
       </Route>

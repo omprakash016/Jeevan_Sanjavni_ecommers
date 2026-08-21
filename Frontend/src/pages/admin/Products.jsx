@@ -17,6 +17,7 @@ import Container from "../../component/ui/Container";
 
 import {
   fetchProducts,
+  fetchDeletedProducts,
   deleteExistingProduct,
   restoreExistingProduct,
 } from "../../redux/product/productSlice";
@@ -27,7 +28,7 @@ const Products = () => {
   const dispatch = useDispatch();
 
   const {
-    products,
+    products = [],
     loading,
     error,
   } = useSelector((state) => state.products);
@@ -36,18 +37,30 @@ const Products = () => {
   const [showDeleted, setShowDeleted] = useState(false);
 
   // ==========================================
-  // FETCH PRODUCTS
+  // FETCH ACTIVE / DELETED PRODUCTS
   // ==========================================
 
+  const loadProducts = () => {
+    if (showDeleted) {
+      dispatch(
+        fetchDeletedProducts({
+          page: 1,
+          limit: 100,
+        })
+      );
+    } else {
+      dispatch(
+        fetchProducts({
+          page: 1,
+          limit: 100,
+        })
+      );
+    }
+  };
+
   useEffect(() => {
-    dispatch(
-      fetchProducts({
-        page: 1,
-        limit: 100,
-        includeDeleted: true,
-      })
-    );
-  }, [dispatch]);
+    loadProducts();
+  }, [dispatch, showDeleted]);
 
   // ==========================================
   // DELETE PRODUCT
@@ -64,20 +77,12 @@ const Products = () => {
       deleteExistingProduct(id)
     );
 
-    if (
-      deleteExistingProduct.fulfilled.match(result)
-    ) {
+    if (deleteExistingProduct.fulfilled.match(result)) {
       toast.success(
         "Product deleted successfully"
       );
 
-      dispatch(
-        fetchProducts({
-          page: 1,
-          limit: 100,
-          includeDeleted: true,
-        })
-      );
+      loadProducts();
     } else {
       toast.error(
         result.payload ||
@@ -91,6 +96,12 @@ const Products = () => {
   // ==========================================
 
   const handleRestore = async (id) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to restore this product?"
+    );
+
+    if (!confirmed) return;
+
     const result = await dispatch(
       restoreExistingProduct(id)
     );
@@ -102,13 +113,7 @@ const Products = () => {
         "Product restored successfully"
       );
 
-      dispatch(
-        fetchProducts({
-          page: 1,
-          limit: 100,
-          includeDeleted: true,
-        })
-      );
+      loadProducts();
     } else {
       toast.error(
         result.payload ||
@@ -118,32 +123,45 @@ const Products = () => {
   };
 
   // ==========================================
-  // SEARCH + DELETE FILTER
+  // SEARCH
   // ==========================================
 
-  const filteredProducts = products.filter(
-    (product) => {
-      const searchValue =
-        search.toLowerCase();
+  const searchValue =
+    search.trim().toLowerCase();
 
-      const matchesSearch =
+  const filteredProducts =
+    products.filter((product) => {
+
+      if (!searchValue) {
+        return true;
+      }
+
+      return (
         product.name
           ?.toLowerCase()
           .includes(searchValue) ||
+
         product.category
           ?.toLowerCase()
-          .includes(searchValue);
+          .includes(searchValue) ||
 
-      const matchesDeleted = showDeleted
-        ? product.isDeleted
-        : !product.isDeleted;
-
-      return (
-        matchesSearch &&
-        matchesDeleted
+        product.slug
+          ?.toLowerCase()
+          .includes(searchValue)
       );
-    }
-  );
+    });
+
+  // ==========================================
+  // HEADER TEXT
+  // ==========================================
+
+  const pageTitle = showDeleted
+    ? "Deleted Products"
+    : "Products";
+
+  const pageDescription = showDeleted
+    ? "View and restore products that have been deleted."
+    : "Manage your Jeevan Sanjivani products.";
 
   return (
     <section className="admin-products-page">
@@ -157,29 +175,37 @@ const Products = () => {
         <div className="admin-products-header">
 
           <div>
-            <h1>Products</h1>
+
+            <h1>
+              {pageTitle}
+            </h1>
 
             <p>
-              Manage your Jeevan
-              Sanjivani products.
+              {pageDescription}
             </p>
+
           </div>
 
-          <Link
-            to="/admin/products/add"
-            className="add-product-btn"
-          >
-            <Plus size={19} />
-            Add Product
-          </Link>
+          {!showDeleted && (
+            <Link
+              to="/admin/products/add"
+              className="add-product-btn"
+            >
+              <Plus size={19} />
+              Add Product
+            </Link>
+          )}
 
         </div>
+
 
         {/* ==================================
             CONTROLS
         ================================== */}
 
         <div className="products-admin-controls">
+
+          {/* SEARCH */}
 
           <div className="admin-search">
 
@@ -196,24 +222,98 @@ const Products = () => {
 
           </div>
 
-          <button
-            className={
-              showDeleted
-                ? "deleted-toggle active"
-                : "deleted-toggle"
-            }
-            onClick={() =>
-              setShowDeleted(
-                (prev) => !prev
-              )
-            }
-          >
-            {showDeleted
-              ? "Active Products"
-              : "Deleted Products"}
-          </button>
+
+          {/* PRODUCT TABS */}
+
+          <div className="product-filter-tabs">
+
+            {/* ACTIVE */}
+
+            <button
+              type="button"
+              className={
+                !showDeleted
+                  ? "product-filter-btn active"
+                  : "product-filter-btn"
+              }
+              onClick={() =>
+                setShowDeleted(false)
+              }
+            >
+              <Eye size={17} />
+
+              Active Products
+            </button>
+
+
+            {/* DELETED */}
+
+            <button
+              type="button"
+              className={
+                showDeleted
+                  ? "product-filter-btn deleted-active"
+                  : "product-filter-btn"
+              }
+              onClick={() =>
+                setShowDeleted(true)
+              }
+            >
+              <Trash2 size={17} />
+
+              Deleted Products
+            </button>
+
+          </div>
 
         </div>
+
+
+        {/* ==================================
+            MODE INFORMATION
+        ================================== */}
+
+        <div className="product-mode-info">
+
+          {showDeleted ? (
+            <>
+              <Trash2 size={18} />
+
+              <div>
+
+                <strong>
+                  Deleted Products
+                </strong>
+
+                <p>
+                  These products are no longer
+                  available in the store.
+                  You can restore them here.
+                </p>
+
+              </div>
+            </>
+          ) : (
+            <>
+              <Eye size={18} />
+
+              <div>
+
+                <strong>
+                  Active Products
+                </strong>
+
+                <p>
+                  These products are currently
+                  available in your store.
+                </p>
+
+              </div>
+            </>
+          )}
+
+        </div>
+
 
         {/* ==================================
             ERROR
@@ -225,6 +325,7 @@ const Products = () => {
           </div>
         )}
 
+
         {/* ==================================
             LOADING
         ================================== */}
@@ -235,11 +336,13 @@ const Products = () => {
           </div>
         )}
 
+
         {/* ==================================
             TABLE
         ================================== */}
 
         {!loading && (
+
           <div className="products-table-wrapper">
 
             <table className="products-table">
@@ -266,10 +369,10 @@ const Products = () => {
 
               </thead>
 
+
               <tbody>
 
-                {filteredProducts.length ===
-                0 ? (
+                {filteredProducts.length === 0 ? (
 
                   <tr>
 
@@ -277,7 +380,11 @@ const Products = () => {
                       colSpan="7"
                       className="no-products"
                     >
-                      No products found.
+
+                      {showDeleted
+                        ? "No deleted products found."
+                        : "No active products found."}
+
                     </td>
 
                   </tr>
@@ -291,9 +398,7 @@ const Products = () => {
                         key={product._id}
                       >
 
-                        {/* =====================
-                            PRODUCT
-                        ====================== */}
+                        {/* PRODUCT */}
 
                         <td>
 
@@ -301,27 +406,20 @@ const Products = () => {
 
                             <img
                               src={
-                                product
-                                  .images?.[0]
-                                  ?.url
+                                product.images?.[0]?.url ||
+                                "/placeholder-product.png"
                               }
-                              alt={
-                                product.name
-                              }
+                              alt={product.name}
                             />
 
                             <div>
 
                               <strong>
-                                {
-                                  product.name
-                                }
+                                {product.name}
                               </strong>
 
                               <small>
-                                {
-                                  product.slug
-                                }
+                                {product.slug}
                               </small>
 
                             </div>
@@ -330,46 +428,38 @@ const Products = () => {
 
                         </td>
 
-                        {/* =====================
-                            CATEGORY
-                        ====================== */}
+
+                        {/* CATEGORY */}
 
                         <td>
-                          {
-                            product.category
-                          }
+                          {product.category}
                         </td>
 
-                        {/* =====================
-                            MRP
-                        ====================== */}
+
+                        {/* MRP */}
 
                         <td>
                           ₹{product.Mrp}
                         </td>
 
-                        {/* =====================
-                            SELLING PRICE
-                        ====================== */}
+
+                        {/* SELLING PRICE */}
 
                         <td className="selling-price">
-                          ₹
-                          {
-                            product.SellingPrice
-                          }
+
+                          ₹{product.SellingPrice}
+
                         </td>
 
-                        {/* =====================
-                            STOCK
-                        ====================== */}
+
+                        {/* STOCK */}
 
                         <td>
                           {product.stock}
                         </td>
 
-                        {/* =====================
-                            STATUS
-                        ====================== */}
+
+                        {/* STATUS */}
 
                         <td>
 
@@ -379,8 +469,7 @@ const Products = () => {
                               Deleted
                             </span>
 
-                          ) : product.stock >
-                            0 ? (
+                          ) : product.stock > 0 ? (
 
                             <span className="status active">
                               Active
@@ -396,17 +485,14 @@ const Products = () => {
 
                         </td>
 
-                        {/* =====================
-                            ACTIONS
-                        ====================== */}
+
+                        {/* ACTIONS */}
 
                         <td>
 
                           <div className="product-actions">
 
-                            {/* ==================
-                                ACTIVE PRODUCT
-                            =================== */}
+                            {/* ACTIVE PRODUCT */}
 
                             {!product.isDeleted && (
                               <>
@@ -418,10 +504,9 @@ const Products = () => {
                                   className="view-action"
                                   title="View Product"
                                 >
-                                  <Eye
-                                    size={17}
-                                  />
+                                  <Eye size={17} />
                                 </Link>
+
 
                                 {/* EDIT */}
 
@@ -430,10 +515,9 @@ const Products = () => {
                                   className="edit-action"
                                   title="Edit Product"
                                 >
-                                  <Edit
-                                    size={17}
-                                  />
+                                  <Edit size={17} />
                                 </Link>
+
 
                                 {/* DELETE */}
 
@@ -455,11 +539,11 @@ const Products = () => {
                               </>
                             )}
 
-                            {/* ==================
-                                DELETED PRODUCT
-                            =================== */}
+
+                            {/* DELETED PRODUCT */}
 
                             {product.isDeleted && (
+
                               <button
                                 type="button"
                                 className="restore-action"
@@ -470,10 +554,15 @@ const Products = () => {
                                   )
                                 }
                               >
+
                                 <RotateCcw
                                   size={17}
                                 />
+
+                                Restore
+
                               </button>
+
                             )}
 
                           </div>
@@ -492,6 +581,7 @@ const Products = () => {
             </table>
 
           </div>
+
         )}
 
       </Container>

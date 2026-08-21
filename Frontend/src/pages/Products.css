@@ -360,7 +360,7 @@
 
   display: block;
 
-  object-fit: cover;
+  object-fit: contain;
 
   transition: transform 0.45s ease;
 }

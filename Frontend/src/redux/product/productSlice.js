@@ -10,6 +10,7 @@ import {
   updateProduct,
   deleteProduct,
   restoreProduct,
+  getDeletedProducts
 } from "../../services/productService";
 
 // ========================================
@@ -321,9 +322,46 @@ builder
     state.loading = false;
     state.error = action.payload;
   });
-
-
 // ========================================
+// FETCH DELETED PRODUCTS
+// ========================================
+
+builder
+  .addCase(
+    fetchDeletedProducts.pending,
+    (state) => {
+      state.loading = true;
+      state.error = null;
+    }
+  )
+
+  .addCase(
+    fetchDeletedProducts.fulfilled,
+    (state, action) => {
+
+      state.loading = false;
+
+      state.products =
+        action.payload.products || [];
+
+      state.pagination =
+        action.payload.pagination ||
+        state.pagination;
+    }
+  )
+
+  .addCase(
+    fetchDeletedProducts.rejected,
+    (state, action) => {
+
+      state.loading = false;
+
+      state.error =
+        action.payload ||
+        "Failed to fetch deleted products";
+    }
+  );
+  // ========================================
 // RESTORE PRODUCT
 // ========================================
 
@@ -360,6 +398,35 @@ export const {
   clearSelectedProduct,
   clearProductError,
 } = productSlice.actions;
+
+// ========================================
+// GET DELETED PRODUCTS
+// ========================================
+
+export const fetchDeletedProducts =
+  createAsyncThunk(
+    "products/fetchDeletedProducts",
+
+    async (
+      params = {},
+      { rejectWithValue }
+    ) => {
+      try {
+        const response =
+          await getDeletedProducts(params);
+
+        return response.data;
+
+      } catch (error) {
+
+        return rejectWithValue(
+          error.response?.data?.message ||
+            "Failed to fetch deleted products"
+        );
+
+      }
+    }
+  );
 
 
 export default productSlice.reducer;

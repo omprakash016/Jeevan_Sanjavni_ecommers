@@ -235,3 +235,203 @@
     width: auto;
   }
 }
+
+/* ==========================================
+   PRODUCT FILTER TABS
+========================================== */
+
+.product-filter-tabs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.product-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 11px 17px;
+
+  border: 1px solid #dce7e2;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #53646a;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.product-filter-btn span {
+  min-width: 24px;
+  height: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 6px;
+
+  border-radius: 20px;
+
+  background: #edf5f2;
+
+  color: #087653;
+
+  font-size: 12px;
+}
+
+.product-filter-btn:hover {
+  border-color: #087653;
+  color: #087653;
+}
+
+.product-filter-btn.active {
+  background: #087653;
+  border-color: #087653;
+  color: white;
+}
+
+.product-filter-btn.active span {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+.product-filter-btn.deleted-active {
+  background: #d92d2d;
+  border-color: #d92d2d;
+  color: white;
+}
+
+.product-filter-btn.deleted-active span {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+
+/* ==========================================
+   MODE INFORMATION
+========================================== */
+
+.product-mode-info {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  margin: 22px 0;
+
+  padding: 15px 18px;
+
+  background: #ffffff;
+
+  border: 1px solid #e3ebe8;
+
+  border-radius: 12px;
+}
+
+.product-mode-info > svg {
+  color: #087653;
+  flex-shrink: 0;
+}
+
+.product-mode-info strong {
+  display: block;
+
+  color: #17324d;
+
+  font-size: 15px;
+  margin-bottom: 3px;
+}
+
+.product-mode-info p {
+  margin: 0;
+
+  color: #718096;
+
+  font-size: 13px;
+}
+
+
+/* ==========================================
+   RESTORE BUTTON
+========================================== */
+
+.restore-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  min-height: 38px;
+
+  padding: 0 12px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #e8f7ef;
+
+  color: #087653;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.restore-action:hover {
+  background: #087653;
+  color: white;
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 900px) {
+
+  .products-admin-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-search {
+    width: 100%;
+  }
+
+  .product-filter-tabs {
+    width: 100%;
+  }
+
+  .product-filter-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .product-filter-tabs {
+    flex-direction: column;
+  }
+
+  .product-filter-btn {
+    width: 100%;
+  }
+
+  .product-mode-info {
+    align-items: flex-start;
+  }
+
+}

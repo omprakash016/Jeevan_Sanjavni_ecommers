@@ -1,3 +1,7 @@
+/* =========================================
+   PRODUCT CARD
+========================================= */
+
 .product-card {
   background: var(--white);
 
@@ -18,6 +22,11 @@
   flex-direction: column;
 }
 
+
+/* =========================================
+   CARD HOVER
+========================================= */
+
 .product-card:hover {
   transform: translateY(-6px);
 
@@ -26,44 +35,80 @@
 }
 
 
-/* =================================
-   IMAGE
-================================= */
+/* =========================================
+   PRODUCT IMAGE
+========================================= */
 
 .product-image-link {
+  display: block;
+
+  width: 100%;
+
   text-decoration: none;
 }
+
+
+/* Image container */
 
 .product-image-wrapper {
   position: relative;
 
   width: 100%;
 
-  height: 260px;
+  /*
+    Increased height so tall product
+    promotional images have enough space.
+  */
+  height: 360px;
 
   background: #f5faf7;
 
   overflow: hidden;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
 }
+
+
+/* Actual product image */
 
 .product-image {
   width: 100%;
 
   height: 100%;
 
-  object-fit: cover;
+  /*
+    IMPORTANT:
+    contain = show the COMPLETE image.
+    cover = cuts/crops the image.
+  */
+  object-fit: contain;
+
+  object-position: center;
+
+  display: block;
 
   transition: transform 0.4s ease;
 }
 
+
+/*
+  Very small hover zoom.
+  We don't use 1.05 because that can
+  make the image look cropped.
+*/
+
 .product-card:hover .product-image {
-  transform: scale(1.05);
+  transform: scale(1.01);
 }
 
 
-/* =================================
-   BADGES
-================================= */
+/* =========================================
+   PRODUCT BADGES
+========================================= */
 
 .product-badge {
   position: absolute;
@@ -87,6 +132,9 @@
   font-weight: 600;
 }
 
+
+/* Bestseller / discount badge */
+
 .product-badge.bestseller {
   left: auto;
 
@@ -96,9 +144,9 @@
 }
 
 
-/* =================================
-   CONTENT
-================================= */
+/* =========================================
+   PRODUCT CONTENT
+========================================= */
 
 .product-content {
   padding: 20px;
@@ -109,6 +157,11 @@
 
   flex: 1;
 }
+
+
+/* =========================================
+   CATEGORY
+========================================= */
 
 .product-category {
   color: var(--primary);
@@ -124,6 +177,11 @@
   margin-bottom: 8px;
 }
 
+
+/* =========================================
+   PRODUCT NAME
+========================================= */
+
 .product-name {
   color: var(--text);
 
@@ -138,9 +196,15 @@
   margin-bottom: 8px;
 }
 
+
 .product-name:hover {
   color: var(--primary);
 }
+
+
+/* =========================================
+   SHORT DESCRIPTION
+========================================= */
 
 .product-short-description {
   color: var(--text-light);
@@ -161,9 +225,9 @@
 }
 
 
-/* =================================
+/* =========================================
    PRICE
-================================= */
+========================================= */
 
 .product-price {
   display: flex;
@@ -175,6 +239,9 @@
   margin-bottom: 15px;
 }
 
+
+/* Selling price */
+
 .selling-price {
   color: var(--primary);
 
@@ -182,6 +249,9 @@
 
   font-weight: 700;
 }
+
+
+/* MRP */
 
 .mrp {
   color: #888;
@@ -192,9 +262,9 @@
 }
 
 
-/* =================================
-   BOTTOM
-================================= */
+/* =========================================
+   PRODUCT BOTTOM
+========================================= */
 
 .product-bottom {
   margin-top: auto;
@@ -208,24 +278,35 @@
   gap: 10px;
 }
 
+
+/* =========================================
+   STOCK
+========================================= */
+
 .stock {
   font-size: 12px;
 
   font-weight: 600;
 }
 
+
+/* Available */
+
 .stock.available {
   color: #16834b;
 }
+
+
+/* Not available */
 
 .stock.unavailable {
   color: #d32f2f;
 }
 
 
-/* =================================
+/* =========================================
    CART BUTTON
-================================= */
+========================================= */
 
 .product-cart-btn {
   display: flex;
@@ -255,11 +336,17 @@
   transition: 0.3s ease;
 }
 
+
+/* Cart button hover */
+
 .product-cart-btn:hover:not(:disabled) {
   background: #09583f;
 
   transform: translateY(-1px);
 }
+
+
+/* Disabled button */
 
 .product-cart-btn:disabled {
   background: #c7c7c7;
@@ -268,23 +355,42 @@
 }
 
 
-/* =================================
+/* =========================================
    MOBILE
-================================= */
+========================================= */
 
 @media (max-width: 600px) {
 
+  /*
+    Slightly smaller image area
+    on mobile.
+  */
+
   .product-image-wrapper {
-    height: 230px;
+    height: 300px;
   }
+
+
+  .product-image {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    object-position: center;
+  }
+
 
   .product-content {
     padding: 16px;
   }
 
+
   .product-name {
     font-size: 17px;
   }
+
 
   .product-bottom {
     flex-direction: column;
@@ -292,12 +398,45 @@
     align-items: stretch;
   }
 
+
   .stock {
     text-align: center;
   }
 
+
   .product-cart-btn {
     width: 100%;
   }
+}
 
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 400px) {
+
+  .product-image-wrapper {
+    height: 270px;
+  }
+
+
+  .product-content {
+    padding: 14px;
+  }
+
+
+  .product-name {
+    font-size: 16px;
+  }
+
+
+  .product-short-description {
+    font-size: 13px;
+  }
+
+
+  .selling-price {
+    font-size: 19px;
+  }
 }
