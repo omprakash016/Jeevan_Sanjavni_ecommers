@@ -5,7 +5,7 @@ import Heading from "../ui/Heading";
 import Container from "../ui/Container";
 
 import WhyCard from "./WhyCard";
-import whyChoose from "../../data/whyChoose";
+import whyChoose from "../../data/WhyChoose"
 
 const WhyChoose = () => {
   return (
