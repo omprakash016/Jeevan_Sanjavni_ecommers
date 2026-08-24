@@ -6,13 +6,12 @@ import {
   Package,
   MapPin,
   CreditCard,
-  CalendarDays,
   XCircle,
   CheckCircle,
   Clock,
   Truck,
 } from "lucide-react";
-
+import "./orderDetails.css";
 import Container from "../component/ui/Container";
 
 import {
@@ -20,7 +19,7 @@ import {
   cancelOrder,
 } from "../services/orderService";
 
-import "./OrderDetails.css";
+
 
 const OrderDetails = () => {
   const { id } = useParams();

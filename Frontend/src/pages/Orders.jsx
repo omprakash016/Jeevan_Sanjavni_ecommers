@@ -4,7 +4,6 @@ import {
   Package,
   Eye,
   CalendarDays,
-  IndianRupee,
   ShoppingBag,
 } from "lucide-react";
 import { toast } from "react-toastify";
