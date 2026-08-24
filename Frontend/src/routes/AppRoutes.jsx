@@ -32,7 +32,7 @@ import Contact from ".././component/contact/Contact";
 import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
 import Profile from "../pages/Profile";
-import OrderDetails from "../pages/OrderDetails";
+import OrderDetails from "../pages/orderDetails";
 import Orders from "../pages/Orders";
 
 // ================================
