@@ -16,20 +16,24 @@ const app = express();
 
 const allowedOrigins = [
   process.env.FRONTEND_URL,
+  'http://localhost:5173',
+  'http://localhost:3000',
 ].filter(Boolean);
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin) || /^https:\/\/.*\.vercel\.app$/.test(origin)) {
+      callback(null, true);
+      return;
+    }
+
+    callback(null, true);
+  },
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH', 'OPTIONS']
+}));
+
 
 app.use(helmet());
 
