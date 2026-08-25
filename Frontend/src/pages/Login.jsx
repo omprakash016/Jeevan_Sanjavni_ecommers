@@ -133,16 +133,10 @@ const Login = () => {
         </AuthButton>
 
       </form>
-
-      <p
-        style={{
-          textAlign: "center",
-          marginTop: 25,
-        }}
-      >
+      <p className="auth-switch">
         Don't have an account?{" "}
         <Link to="/register">
-          Register
+          register
         </Link>
       </p>
 
