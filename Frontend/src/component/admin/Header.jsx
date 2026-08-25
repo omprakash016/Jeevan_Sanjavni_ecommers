@@ -3,10 +3,18 @@ import "./Header.css";
 import {
   Menu,
   Bell,
-  UserCircle
+  UserCircle,
+  Home
 } from "lucide-react";
 
+import { useNavigate } from "react-router-dom";
+
 const Header = ({ onMenuClick }) => {
+   const navigate = useNavigate();
+
+   const handleHome = () => {
+    navigate("/");
+  };
 
   return (
 
@@ -31,6 +39,17 @@ const Header = ({ onMenuClick }) => {
 
 
       <div className="header-right">
+
+
+         <button
+          className="header-home-btn"
+          onClick={handleHome}
+          title="Go to Home"
+        >
+          <Home size={19} />
+          <span>Home</span>
+        </button>
+
 
         <button className="header-icon-btn">
           <Bell size={20} />
