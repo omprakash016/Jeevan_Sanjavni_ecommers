@@ -90,6 +90,15 @@ const Navbar = () => {
               Home
             </Link>
 
+            
+
+            <Link
+              to="/products"
+              onClick={closeMenu}
+            >
+              Products
+            </Link>
+            
             <Link
               to="/services"
               onClick={closeMenu}
@@ -109,13 +118,6 @@ const Navbar = () => {
               onClick={closeMenu}
             >
               About
-            </Link>
-
-            <Link
-              to="/products"
-              onClick={closeMenu}
-            >
-              Products
             </Link>
 
             <Link

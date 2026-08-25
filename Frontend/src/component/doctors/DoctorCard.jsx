@@ -14,9 +14,13 @@ const DoctorCard = ({ doctor }) => {
       <p className="qualification">
         {doctor.qualification}
       </p>
-      <p className="Doctor_contact">
-        📞 {doctor.contact}
-      </p>
+       {/* Call Now Button */}
+      <a
+        href={`tel:${doctor.contact.replace(/\s+/g, "")}`}
+        className="call-doctor-btn"
+      >
+        📞 Call Now
+      </a>
     </div>
   );
 };

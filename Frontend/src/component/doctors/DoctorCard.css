@@ -41,3 +41,41 @@
   font-weight: 600;
   color: var(--text);
 }
+
+/* ================================
+   CALL NOW BUTTON
+================================ */
+
+.call-doctor-btn {
+  display: block;
+
+  width: calc(100% - 40px);
+
+  margin: 10px 20px 20px;
+
+  padding: 12px 15px;
+
+  background: var(--primary);
+
+  color: #ffffff;
+
+  text-align: center;
+
+  text-decoration: none;
+
+  border-radius: 9px;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  transition: all 0.3s ease;
+}
+
+.call-doctor-btn:hover {
+  background: #09583f;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}

@@ -1,14 +1,13 @@
 import "./Hero.css";
 import hero from "../../data/hero";
 
-import { Phone, CalendarDays, CheckCircle } from "lucide-react";
-
+import { Phone, CheckCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import Container from "../ui/Container";
 import Badge from "../ui/Badge";
 import Heading from "../ui/Heading";
-import Button from "../ui/Button";
 
-import heroDoctor from "../../assets/hero/hero-doctor.avif";
+import heroDoctor from "../../assets/hero/Doctor.png";
 import HeroStats from "./HeroStats";
 import { motion } from "framer-motion";
 
@@ -17,7 +16,12 @@ import {
   fadeRight,
 } from "../animations/motion";
 
+
 const Hero = () => {
+   const navigate = useNavigate();
+   const handleProductClick = () => {
+  navigate("/products");
+  };
   return (
     <section className="hero">
 
@@ -63,10 +67,17 @@ const Hero = () => {
 
             <div className="hero-buttons">
 
-              <Button>
-                <CalendarDays size={18}/>
-                Free Appointment
-              </Button>
+            
+            {/* PRODUCT BUTTON */}
+
+            <button
+              type="button"
+              className="video-btn"
+              onClick={handleProductClick}
+            >
+              View Our Products
+              <span>+</span>
+            </button>
 
               <a
               href="tel:+919307363011"

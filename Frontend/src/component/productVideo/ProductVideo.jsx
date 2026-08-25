@@ -48,6 +48,7 @@ const ProductVideo = () => {
             <video
               autoPlay
               loop
+              muted
               playsInline
               controls
               className="clinic-video"
